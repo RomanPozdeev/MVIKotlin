@@ -13,6 +13,7 @@ import com.arkivanov.mvikotlin.sample.todo.common.controller.TodoDetailsControll
 import com.arkivanov.mvikotlin.sample.todo.common.database.TodoDatabase
 import com.arkivanov.mvikotlin.sample.todo.coroutines.controller.TodoDetailsCoroutinesController
 import com.arkivanov.mvikotlin.sample.todo.reaktive.controller.TodoDetailsReaktiveController
+import com.arkivanov.mvikotlin.sample.todo.rxjava2.controller.TodoDetailsRxJava2Controller
 import java.io.Serializable
 
 class TodoDetailsFragment(
@@ -35,6 +36,9 @@ class TodoDetailsFragment(
             when (dependencies.frameworkType) {
                 FrameworkType.REAKTIVE -> TodoDetailsReaktiveController(todoDetailsControllerDependencies)
                 FrameworkType.COROUTINES -> TodoDetailsCoroutinesController(todoDetailsControllerDependencies)
+                FrameworkType.RXJAVA2 -> TodoDetailsRxJava2Controller(
+                    todoDetailsControllerDependencies
+                )
             }
     }
 

@@ -1,20 +1,16 @@
-package com.arkivanov.mvikotlin.sample.todo.reaktive.store
+package com.arkivanov.mvikotlin.sample.todo.rxjava2.store
 
 import com.arkivanov.mvikotlin.core.store.Executor
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
+import com.arkivanov.mvikotlin.extensions.rxjava2.RxJava2Executor
 import com.arkivanov.mvikotlin.sample.todo.common.database.TodoDatabase
 import com.arkivanov.mvikotlin.sample.todo.common.internal.store.list.TodoListStore.Intent
 import com.arkivanov.mvikotlin.sample.todo.common.internal.store.list.TodoListStore.State
 import com.arkivanov.mvikotlin.sample.todo.common.internal.store.list.TodoListStoreAbstractFactory
-import com.badoo.reaktive.completable.completableFromFunction
-import com.badoo.reaktive.completable.subscribeOn
-import com.badoo.reaktive.scheduler.ioScheduler
-import com.badoo.reaktive.scheduler.mainScheduler
-import com.badoo.reaktive.single.map
-import com.badoo.reaktive.single.observeOn
-import com.badoo.reaktive.single.singleFromFunction
-import com.badoo.reaktive.single.subscribeOn
+import io.reactivex.Completable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 internal class TodoListStoreFactory(
     storeFactory: StoreFactory,
@@ -25,13 +21,13 @@ internal class TodoListStoreFactory(
 
     override fun createExecutor(): Executor<Intent, Unit, State, Result, Nothing> = ExecutorImpl()
 
-    private inner class ExecutorImpl : ReaktiveExecutor<Intent, Unit, State, Result, Nothing>() {
+    private inner class ExecutorImpl : RxJava2Executor<Intent, Unit, State, Result, Nothing>() {
         override fun executeAction(action: Unit, getState: () -> State) {
-            singleFromFunction(database::getAll)
-                .subscribeOn(ioScheduler)
+            Single.fromCallable(database::getAll)
+                .subscribeOn(Schedulers.io())
                 .map(Result::Loaded)
-                .observeOn(mainScheduler)
-                .subscribeScoped(isThreadLocal = true, onSuccess = ::dispatch)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeScoped(onSuccess = ::dispatch)
         }
 
         override fun executeIntent(intent: Intent, getState: () -> State) {
@@ -50,8 +46,8 @@ internal class TodoListStoreFactory(
         private fun delete(id: String) {
             dispatch(Result.Deleted(id))
 
-            singleFromFunction { database.delete(id) }
-                .subscribeOn(ioScheduler)
+            Single.fromCallable { database.delete(id) }
+                .subscribeOn(Schedulers.io())
                 .subscribeScoped()
         }
 
@@ -60,10 +56,10 @@ internal class TodoListStoreFactory(
 
             val item = state().items.find { it.id == id } ?: return
 
-            completableFromFunction {
+            Completable.fromAction {
                 database.save(id, item.data)
             }
-                .subscribeOn(ioScheduler)
+                .subscribeOn(Schedulers.io())
                 .subscribeScoped()
         }
     }

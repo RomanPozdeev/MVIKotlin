@@ -10,6 +10,7 @@ import com.arkivanov.mvikotlin.sample.todo.android.R
 import com.arkivanov.mvikotlin.sample.todo.android.Relay
 import com.arkivanov.mvikotlin.sample.todo.android.details.TodoDetailsFragment
 import com.arkivanov.mvikotlin.sample.todo.android.list.TodoListFragment
+import com.arkivanov.mvikotlin.sample.todo.common.controller.TodoListController
 import com.arkivanov.mvikotlin.sample.todo.common.database.TodoDatabase
 import com.arkivanov.mvikotlin.sample.todo.common.controller.TodoDetailsController.Output as DetailsOutput
 import com.arkivanov.mvikotlin.sample.todo.common.controller.TodoListController.Input as ListInput
@@ -46,6 +47,8 @@ class RootFragment(
     private fun listOutput(output: ListOutput) {
         when (output) {
             is ListOutput.ItemSelected -> openDetails(itemId = output.id)
+            TodoListController.Output.NoOp -> {
+            }
         }.let {}
     }
 

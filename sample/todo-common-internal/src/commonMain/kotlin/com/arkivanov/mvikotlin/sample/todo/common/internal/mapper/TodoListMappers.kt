@@ -8,27 +8,27 @@ import com.arkivanov.mvikotlin.sample.todo.common.internal.store.list.TodoListSt
 import com.arkivanov.mvikotlin.sample.todo.common.view.TodoListView.Event
 import com.arkivanov.mvikotlin.sample.todo.common.view.TodoListView.Model
 
-val listStateToListModel: State.() -> Model? = { Model(items = items) }
+val listStateToListModel: State.() -> Model = { Model(items = items) }
 
-val listEventToListIntent: Event.() -> Intent? =
+val listEventToListIntent: Event.() -> Intent =
     {
         when (this) {
             is Event.ItemDoneClicked -> Intent.ToggleDone(id = id)
             is Event.ItemDeleteClicked -> Intent.Delete(id = id)
-            is Event.ItemClicked -> null
+            is Event.ItemClicked -> Intent.NoOp
         }
     }
 
-val listEventToOutput: Event.() -> Output? =
+val listEventToOutput: Event.() -> Output =
     {
         when (this) {
             is Event.ItemClicked -> Output.ItemSelected(id)
             is Event.ItemDoneClicked,
-            is Event.ItemDeleteClicked -> null
+            is Event.ItemDeleteClicked -> Output.NoOp
         }
     }
 
-val inputToListIntent: Input.() -> Intent? =
+val inputToListIntent: Input.() -> Intent =
     {
         when (this) {
             is Input.ItemChanged -> Intent.HandleItemChanged(id = id, data = data)
@@ -36,7 +36,7 @@ val inputToListIntent: Input.() -> Intent? =
         }
     }
 
-val addLabelToListIntent: TodoAddStore.Label.() -> Intent? =
+val addLabelToListIntent: TodoAddStore.Label.() -> Intent =
     {
         when (this) {
             is TodoAddStore.Label.Added -> Intent.HandleAdded(item)

@@ -9,6 +9,7 @@ import com.arkivanov.mvikotlin.sample.todo.common.internal.store.list.TodoListSt
 interface TodoListStore : Store<Intent, State, Nothing> {
 
     sealed class Intent : JvmSerializable {
+        object NoOp : Intent()
         data class Delete(val id: String) : Intent()
         data class ToggleDone(val id: String) : Intent()
         data class HandleAdded(val item: TodoItem) : Intent()

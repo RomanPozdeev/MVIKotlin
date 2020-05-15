@@ -12,11 +12,13 @@ include(":mvikotlin-timetravel-proto-internal")
 include(":mvikotlin-timetravel-plugin-idea")
 include(":mvikotlin-extensions-reaktive")
 include(":mvikotlin-extensions-coroutines")
+include(":mvikotlin-extensions-rxjava")
 include(":androidx-lifecycle-interop")
 include(":sample:todo-common")
 include(":sample:todo-common-internal")
 include(":sample:todo-reaktive")
 include(":sample:todo-coroutines")
+include(":sample:todo-rxjava2")
 
 //include(":tools:check-publication")
 

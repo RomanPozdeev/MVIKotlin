@@ -30,6 +30,7 @@ interface TodoListController {
     }
 
     sealed class Output {
+        object NoOp : Output()
         data class ItemSelected(val id: String) : Output()
     }
 }

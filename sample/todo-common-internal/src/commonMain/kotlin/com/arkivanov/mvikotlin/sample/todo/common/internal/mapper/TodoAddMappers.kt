@@ -5,9 +5,9 @@ import com.arkivanov.mvikotlin.sample.todo.common.internal.store.add.TodoAddStor
 import com.arkivanov.mvikotlin.sample.todo.common.view.TodoAddView.Event
 import com.arkivanov.mvikotlin.sample.todo.common.view.TodoAddView.Model
 
-val addStateToAddModel: State.() -> Model? = { Model(text = text) }
+val addStateToAddModel: State.() -> Model = { Model(text = text) }
 
-val addEventToAddIntent: Event.() -> Intent? =
+val addEventToAddIntent: Event.() -> Intent =
     {
         when (this) {
             is Event.TextChanged -> Intent.HandleTextChanged(text)

@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                             savedState = lastCustomNonConfigurationInstance as MutableMap<String, Any>?
                         )
 
-                    override val frameworkType: FrameworkType = FrameworkType.COROUTINES
+                    override val frameworkType: FrameworkType = FrameworkType.RXJAVA2
                 }
             )
     }

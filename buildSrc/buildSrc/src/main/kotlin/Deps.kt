@@ -76,6 +76,10 @@ object Deps {
         }
     }
 
+    object ReactiveX : Group(name = "io.reactivex.rxjava2") {
+        object RxJava2 : Dependency(group = ReactiveX, name = "rxjava", version = "2.2.19")
+    }
+
     object Badoo {
         object Reaktive : Group(name = "com.badoo.reaktive") {
             private const val version = "1.1.12"

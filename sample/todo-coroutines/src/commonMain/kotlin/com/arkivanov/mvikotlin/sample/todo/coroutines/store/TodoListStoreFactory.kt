@@ -36,6 +36,8 @@ internal class TodoListStoreFactory(
                 is Intent.HandleTextChanged -> dispatch(Result.TextChanged(intent.id, intent.text))
                 is Intent.HandleDeleted -> dispatch(Result.Deleted(intent.id))
                 is Intent.HandleItemChanged -> dispatch(Result.Changed(intent.id, intent.data))
+                Intent.NoOp -> {
+                }
             }.let {}
         }
 

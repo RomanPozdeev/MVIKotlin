@@ -10,6 +10,7 @@ android {
         applicationId = "com.arkivanov.rxkotlin.sample.todo.android"
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -47,4 +48,5 @@ dependencies {
     implementation(project(":androidx-lifecycle-interop"))
     implementation(project(":sample:todo-reaktive"))
     implementation(project(":sample:todo-coroutines"))
+    implementation(project(":sample:todo-rxjava2"))
 }

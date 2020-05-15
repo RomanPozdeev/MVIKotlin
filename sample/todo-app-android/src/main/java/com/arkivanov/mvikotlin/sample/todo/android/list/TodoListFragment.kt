@@ -15,6 +15,7 @@ import com.arkivanov.mvikotlin.sample.todo.common.controller.TodoListController
 import com.arkivanov.mvikotlin.sample.todo.common.database.TodoDatabase
 import com.arkivanov.mvikotlin.sample.todo.coroutines.controller.TodoListCoroutinesController
 import com.arkivanov.mvikotlin.sample.todo.reaktive.controller.TodoListReaktiveController
+import com.arkivanov.mvikotlin.sample.todo.rxjava2.controller.TodoListRxJava2Controller
 
 class TodoListFragment(
     private val dependencies: Dependencies
@@ -36,6 +37,7 @@ class TodoListFragment(
         return when (dependencies.frameworkType) {
             FrameworkType.REAKTIVE -> TodoListReaktiveController(todoListControllerDependencies)
             FrameworkType.COROUTINES -> TodoListCoroutinesController(todoListControllerDependencies)
+            FrameworkType.RXJAVA2 -> TodoListRxJava2Controller(todoListControllerDependencies)
         }
     }
 
